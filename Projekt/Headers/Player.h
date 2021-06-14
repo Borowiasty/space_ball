@@ -31,7 +31,7 @@ struct Player_part : public sf::Sprite
         setPosition(sf::Vector2f(pos_x, pos_y));
     }
 
-    std::tuple<double, double> bounce(double speed_x, double speed_y)
+    std::tuple<double, double> bounce(double speed_x, double speed_y) const
     {
         switch (index_)
         {
@@ -55,6 +55,7 @@ struct Player_part : public sf::Sprite
             else { return std::make_tuple<double, double>(speed_x * -1.5, speed_y * -0.5); }
             break;
         }
+        std::cerr << "Error Player.h line 58" << index_ << std::endl;
     }
 };
 
@@ -74,7 +75,7 @@ public:
         pad_.emplace_back(textures, 4, pad_[pad_.size() - 1].getGlobalBounds().left + pad_[pad_.size() - 1].getGlobalBounds().width, pad_[pad_.size() - 1].getGlobalBounds().top);
     }
 
-    Player_part pad(int index) { return pad_[index]; }
+    const Player_part &pad(int index) { return pad_[index]; }
     int pad_size() { return pad_.size(); }
 
     void step(sf::Time time, const sf::Window& window)

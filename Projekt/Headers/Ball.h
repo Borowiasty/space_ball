@@ -28,7 +28,7 @@ public:
         if (getGlobalBounds().top <= 0) { speed_y_ *= -1; move(0, 0.1); }
         else if (getGlobalBounds().top + getGlobalBounds().height >= window.getSize().y) { return true; }
 
-        for (int i = 0; i <= player.pad_size(); i++)
+        for (int i = 0; i < player.pad_size(); i++)
         {
             if (getGlobalBounds().intersects(player.pad(i).getGlobalBounds()))
             {
