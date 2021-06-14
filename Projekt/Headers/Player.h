@@ -31,7 +31,7 @@ struct Player_part : public sf::Sprite
         setPosition(sf::Vector2f(pos_x, pos_y));
     }
 
-    std::tuple<double, double> bounce(double speed_x, double speed_y) const
+    std::tuple<double, double> bounce(double speed_x, double speed_y, int shoud_be) const
     {
         switch (index_)
         {
@@ -40,22 +40,25 @@ struct Player_part : public sf::Sprite
             else { return std::make_tuple<double, double>(speed_x * 1.5, -0.5); }
             break;
         case 1:
-            if (speed_x > 0) { return std::make_tuple<double, double>(speed_x * -1.1, speed_y * -0.9); }
+            if (speed_x > 0) { return std::make_tuple<double, double>(speed_x * -1.2, speed_y * -0.8); }
             else { return std::make_tuple<double, double>(speed_x * 1.1, speed_y * -0.9); }
             break;
         case 2:
-            return std::make_tuple<double, double>(speed_x * 1, speed_y * -1);
+            if (abs(speed_x) < abs(speed_y)) { return std::make_tuple<double, double>(((shoud_be * 1.0) - 10) * (speed_x / abs(speed_x)), shoud_be + 10*(-1.0)); }
+            else if (abs(speed_x) > abs(speed_y)) { return std::make_tuple<double, double>(((shoud_be * 1.0) + 10) * (speed_x / abs(speed_x)), shoud_be - 10 * (-1.0)); }
+            else { return std::make_tuple<double, double>((shoud_be * 1.0) * (speed_x / abs(speed_x)), shoud_be * (-1.0)); }
             break;
         case 3:
-            if (speed_x > 0) { return std::make_tuple<double, double>(speed_x * 1.1, speed_y * -0.9); }
+            if (speed_x > 0) { return std::make_tuple<double, double>(speed_x * 1.2, speed_y * -0.8); }
             else { return std::make_tuple<double, double>(speed_x * -1.1, speed_y * -0.9); }
             break;
         case 4:
             if (speed_x > 0) { return std::make_tuple<double, double>(speed_x * 1.5, speed_y * -0.5); }
             else { return std::make_tuple<double, double>(speed_x * -1.5, speed_y * -0.5); }
             break;
+        default:
+            return std::make_tuple<double, double>(speed_x *1.0, speed_y*1.0);
         }
-        std::cerr << "Error Player.h line 58" << index_ << std::endl;
     }
 };
 
@@ -63,7 +66,7 @@ class Player
 {
 protected:
     std::vector <Player_part> pad_;
-    int speed_ = 400;
+    int speed_ = 700;
 public:
     Player() {}
     Player(const std::map<std::string, sf::Texture>& textures, double pos_x, double pos_y)

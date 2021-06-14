@@ -33,6 +33,50 @@ std::map<std::string, sf::Texture> get_textures()
     return textures;
 }
 
+std::map < std::string, sf::Texture> get_drops()
+{
+    std::map<std::string, sf::Texture> drops;
+    sf::Texture drop;
+
+    drop.loadFromFile("Textures/drop_textures/larger_pad.png");
+    drop.setSmooth(true);
+    drops["larger_pad"] = drop;
+
+    drop.loadFromFile("Textures/drop_textures/smaller_pad.png");
+    drop.setSmooth(true);
+    drops["smaller_pad"] = drop;
+
+    drop.loadFromFile("Textures/drop_textures/faster_pad.png");
+    drop.setSmooth(true);
+    drops["faster_pad"] = drop;
+
+    drop.loadFromFile("Textures/drop_textures/stop_pad.png");
+    drop.setSmooth(true);
+    drops["stop_pad"] = drop;
+
+    drop.loadFromFile("Textures/drop_textures/faster_ball.png");
+    drop.setSmooth(true);
+    drops["faster_ball"] = drop;
+
+    drop.loadFromFile("Textures/drop_textures/slower_ball.png");
+    drop.setSmooth(true);
+    drops["slower_ball"] = drop;
+
+    drop.loadFromFile("Textures/drop_textures/no_lose.png");
+    drop.setSmooth(true);
+    drops["no_lose"] = drop;
+
+    drop.loadFromFile("Textures/drop_textures/multi_ball.png");
+    drop.setSmooth(true);
+    drops["multi_ball"] = drop;
+
+    drop.loadFromFile("Textures/drop_textures/500_points.png");
+    drop.setSmooth(true);
+    drops["500_points"] = drop;
+
+    return drops;
+}
+
 std::vector <sf::Font> get_fonts()
 {
     sf::Font font;
