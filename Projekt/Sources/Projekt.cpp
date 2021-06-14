@@ -18,7 +18,6 @@
 std::string int_to_string(int arg)
 {
     std::string output="";
-    int a = 0;
     while (arg > 0)
     {
         output += (char)((arg % 10)+48);
