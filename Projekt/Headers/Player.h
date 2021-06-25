@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Enemy_block.h"
 
 struct Player_part : public sf::Sprite
 {
@@ -66,7 +67,9 @@ class Player
 {
 protected:
     std::vector <Player_part> pad_;
-    int speed_ = 700;
+    std::vector <double> speed_{ 700.0, 0.0 };
+    std::vector <double> changing_size_{ 0.0, 0.0 };
+    std::vector <double> stop_{ 0.0, 0.0 };
 public:
     Player() {}
     Player(const std::map<std::string, sf::Texture>& textures, double pos_x, double pos_y)
@@ -83,40 +86,144 @@ public:
 
     void step(sf::Time time, const sf::Window& window)
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        if (changing_size_[0])
         {
-            if (pad_[pad_.size() - 1].getGlobalBounds().left + pad_[pad_.size() - 1].getGlobalBounds().width < window.getSize().x)
+            changing_size_[1] -= time.asSeconds();
+            if (changing_size_[1] <= 0.0)
             {
-                for (auto& pad_part : pad_)
-                {
-                    pad_part.move(speed_ * time.asSeconds(), 0);
-                }
+                changing_size_[1] = 0.0;
+
+                if (changing_size_[0] == 1) { make_it_smaller(); }
+                else { make_it_bigger(); }
+                changing_size_[0] = 0;
             }
-            else
-            {
-                for (auto& pad_part : pad_)
-                {
-                    pad_part.move(-0.5, 0);
-                }
-            }
+        }
+        if (speed_[1] != 0.0)
+        {
+            speed_[1] -= time.asSeconds();
+
+            if (speed_[1] <= 0.0) { make_it_slower(); }
+        }
+        if (stop_[1] != 0.0)
+        {
+            stop_[1] -= time.asSeconds();
+
+            if (stop_[1] <= 0.0) { make_it_move(); }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        if (stop_[0] == 0.0)
         {
-            if (pad_[0].getGlobalBounds().left > 0)
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
-                for (auto& pad_part : pad_)
+                if (pad_[pad_.size() - 1].getGlobalBounds().left + pad_[pad_.size() - 1].getGlobalBounds().width < window.getSize().x)
                 {
-                    pad_part.move(-speed_ * time.asSeconds(), 0);
+                    for (auto& pad_part : pad_)
+                    {
+                        pad_part.move(speed_[0] * time.asSeconds(), 0);
+                    }
+                }
+                else
+                {
+                    for (auto& pad_part : pad_)
+                    {
+                        pad_part.move(-0.5, 0);
+                    }
                 }
             }
-            else
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
-                for (auto& pad_part : pad_)
+                if (pad_[0].getGlobalBounds().left > 0)
                 {
-                    pad_part.move(0.5, 0);
+                    for (auto& pad_part : pad_)
+                    {
+                        pad_part.move(-speed_[0] * time.asSeconds(), 0);
+                    }
+                }
+                else
+                {
+                    for (auto& pad_part : pad_)
+                    {
+                        pad_part.move(0.5, 0);
+                    }
                 }
             }
         }
+        
     }
+
+    int cached_gift(std::vector <Enemy_block> &enemy_blocks) // from 1 to 9
+    {
+        for (auto &drop : enemy_blocks)
+        {
+            for (auto &pad_part : pad_)
+            {
+                if (pad_part.getGlobalBounds().intersects(drop.getGlobalBounds()))
+                {
+                    drop.disapear();
+                    return drop.gift();
+                }
+            }
+        }
+        return 0;
+    }
+
+    void make_it_bigger()
+    {
+        for (auto& pad_part : pad_) { pad_part.scale(1.25, 1); }
+
+        pad_[2].setPosition(pad_[2].getGlobalBounds().left - ((pad_[2].getGlobalBounds().width - pad_[2].getGlobalBounds().width * 0.8) / 2), pad_[2].getGlobalBounds().top);
+        pad_[1].setPosition(pad_[2].getGlobalBounds().left - pad_[1].getGlobalBounds().width, pad_[1].getGlobalBounds().top);
+        pad_[0].setPosition(pad_[1].getGlobalBounds().left - pad_[0].getGlobalBounds().width, pad_[0].getGlobalBounds().top);
+        pad_[3].setPosition(pad_[2].getGlobalBounds().left + pad_[2].getGlobalBounds().width, pad_[3].getGlobalBounds().top);
+        pad_[4].setPosition(pad_[3].getGlobalBounds().left + pad_[3].getGlobalBounds().width, pad_[4].getGlobalBounds().top);
+        changing_size_[0] = 1;
+        changing_size_[1] = 5.0;
+    }
+
+    void make_it_smaller()
+    {
+        for (auto& pad_part : pad_) { pad_part.scale(0.8, 1); }
+
+        pad_[2].setPosition(pad_[2].getGlobalBounds().left - ((pad_[2].getGlobalBounds().width - pad_[2].getGlobalBounds().width * 1.2) / 2), pad_[2].getGlobalBounds().top);
+        pad_[1].setPosition(pad_[2].getGlobalBounds().left - pad_[1].getGlobalBounds().width, pad_[1].getGlobalBounds().top);
+        pad_[0].setPosition(pad_[1].getGlobalBounds().left - pad_[0].getGlobalBounds().width, pad_[0].getGlobalBounds().top);
+        pad_[3].setPosition(pad_[2].getGlobalBounds().left + pad_[2].getGlobalBounds().width, pad_[3].getGlobalBounds().top);
+        pad_[4].setPosition(pad_[3].getGlobalBounds().left + pad_[3].getGlobalBounds().width, pad_[4].getGlobalBounds().top);
+        changing_size_[0] = -1;
+        changing_size_[1] = 5.0;
+    }
+
+    void make_it_faster()
+    {
+        speed_[0] += 700;
+        speed_[1] = 10.0;
+    }
+
+    void make_it_slower()
+    {
+        speed_[0] -= 700;
+        speed_[1] = 0.0;
+    }
+
+    void make_it_stop()
+    {
+        stop_[0] = 1.0;
+        stop_[1] = 1.0;
+    }
+
+    void make_it_move()
+    {
+        stop_[0] = 0.0;
+        stop_[1] = 0.0;
+    }
+
+    bool get_speed_is_changed() { return speed_[0] != 700.0; }
+    double get_speed_time() { return speed_[1]; }
+
+    bool get_size_is_changed() { return changing_size_[0] != 0.0; }
+    double get_changing_size_time() { return changing_size_[1]; }
+
+    bool get_stop_is_changed() { return stop_[0] != 0.0; }
+    double get_stop_time() { return stop_[1]; }
 };

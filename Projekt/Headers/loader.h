@@ -23,6 +23,9 @@ std::map<std::string, sf::Texture> get_textures()
     texture.loadFromFile("Textures/block_locked_large.png");
     textures["locked_block"] = texture;
 
+    texture.loadFromFile("Textures/block_gift.png");
+    textures["block_gift"] = texture;
+
     texture.loadFromFile("Textures/button_yellow.png");
     textures["button"] = texture;
 
@@ -86,4 +89,33 @@ std::vector <sf::Font> get_fonts()
     fonts.emplace_back(font);
 
     return fonts;
+}
+
+std::map<std::string, sf::SoundBuffer> get_samples()
+{
+    sf::SoundBuffer sample;
+    std::map <std::string, sf::SoundBuffer> samples;
+
+    sample.loadFromFile("Samples/button_touch.ogg");
+    samples["button_touch"] = sample;
+
+    sample.loadFromFile("Samples/destroyed_gift.ogg");
+    samples["destroyed_gift"] = sample;
+
+    sample.loadFromFile("Samples/destroyed_heavy_block.ogg");
+    samples["destroyed_heavy_block"] = sample;
+
+    sample.loadFromFile("Samples/destroyed_normal_block.ogg");
+    samples["destroyed_normal_block"] = sample;
+
+    sample.loadFromFile("Samples/idestroyable_bounce.ogg");
+    samples["idestroyable_bounce"] = sample;
+
+    sample.loadFromFile("Samples/pad_bounce.ogg");
+    samples["pad_bounce"] = sample;
+
+    /*sample.loadFromFile("Samples/");
+    samples[""] = sample;*/
+
+    return samples;
 }

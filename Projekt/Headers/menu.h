@@ -1,11 +1,11 @@
 #pragma once
 
-int menu(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures);
-void controls(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures);
-int set_difficulty(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures);
-void points_table(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures);
+int menu(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples);
+void controls(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples);
+int set_difficulty(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples);
+void points_table(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples);
 
-int menu(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures)                                      //0-exit, 1-easy, 2-medium, 3-hard, 4-controls, 5-points, 
+int menu(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer> &samples)                                      //0-exit, 1-easy, 2-medium, 3-hard, 4-controls, 5-points, 
 {
     sf::RenderWindow menu_window(sf::VideoMode(360, 600), "Menu");
 
@@ -16,11 +16,11 @@ int menu(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Te
     header.setCharacterSize(24);
 
     std::vector<Button> options;
-    options.emplace_back(fonts, textures, "Play", 20, 300, 80, menu_window.getSize().x / 2, 150);
-    options.emplace_back(fonts, textures, "Controls", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
-    options.emplace_back(fonts, textures, "Difficulty", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
-    options.emplace_back(fonts, textures, "Scores of the time", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
-    options.emplace_back(fonts, textures, "Exit", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+    options.emplace_back(fonts, textures, samples, "Play", 20, 300, 80, menu_window.getSize().x / 2, 150);
+    options.emplace_back(fonts, textures, samples, "Controls", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+    options.emplace_back(fonts, textures, samples, "Difficulty", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+    options.emplace_back(fonts, textures, samples, "Scores of the time", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+    options.emplace_back(fonts, textures, samples, "Exit", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
 
     int difficulty = 2;
 
@@ -35,7 +35,7 @@ int menu(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Te
             {
                 if (options[0].step(sf::Mouse::getPosition(menu_window))) { menu_window.close(); return difficulty; }
                 else if (options[1].step(sf::Mouse::getPosition(menu_window))) { menu_window.close(); return 4; }
-                else if (options[2].step(sf::Mouse::getPosition(menu_window))) { difficulty = set_difficulty(fonts, textures); }
+                else if (options[2].step(sf::Mouse::getPosition(menu_window))) { difficulty = set_difficulty(fonts, textures, samples); }
                 else if (options[3].step(sf::Mouse::getPosition(menu_window))) { menu_window.close(); return 5; }
                 else if (options[4].step(sf::Mouse::getPosition(menu_window))) { menu_window.close(); return 0; }
             }
@@ -60,12 +60,12 @@ int menu(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Te
     menu_window.close();
 }
 
-void controls(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures)
+void controls(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples)
 {
 
 }
 
-int set_difficulty(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures)       //1 - easy, 2 - medium, 3 - hard 
+int set_difficulty(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples)       //1 - easy, 2 - medium, 3 - hard 
 {
     sf::RenderWindow menu_difficulty(sf::VideoMode(360, 600), "Diffuiculty");
 
@@ -76,9 +76,9 @@ int set_difficulty(const std::vector <sf::Font>& fonts, const std::map<std::stri
     header.setCharacterSize(24);
 
     std::vector<Button> options;
-    options.emplace_back(fonts, textures, "Easy", 20, 300, 80, menu_difficulty.getSize().x / 2, 150);
-    options.emplace_back(fonts, textures, "Medium", 20, 300, 80, menu_difficulty.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
-    options.emplace_back(fonts, textures, "Hard", 20, 300, 80, menu_difficulty.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+    options.emplace_back(fonts, textures, samples, "Easy", 20, 300, 80, menu_difficulty.getSize().x / 2, 150);
+    options.emplace_back(fonts, textures, samples, "Medium", 20, 300, 80, menu_difficulty.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+    options.emplace_back(fonts, textures, samples, "Hard", 20, 300, 80, menu_difficulty.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
 
     while (menu_difficulty.isOpen())
     {
@@ -114,7 +114,7 @@ int set_difficulty(const std::vector <sf::Font>& fonts, const std::map<std::stri
     menu_difficulty.close();
 }
 
-void points_table(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures)
+void points_table(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples)
 {
     sf::RenderWindow scores_of_the_time(sf::VideoMode(360, 600), "Scores of the time");
 
@@ -145,7 +145,7 @@ void points_table(const std::vector <sf::Font>& fonts, const std::map<std::strin
         }
     }
 
-    Button exit_Button(fonts, textures, "Exit", 20, 300, 80, scores_of_the_time.getSize().x / 2, scores_of_the_time.getSize().y - 30);
+    Button exit_Button(fonts, textures, samples, "Exit", 20, 300, 80, scores_of_the_time.getSize().x / 2, scores_of_the_time.getSize().y - 30);
 
     while (scores_of_the_time.isOpen())
     {
