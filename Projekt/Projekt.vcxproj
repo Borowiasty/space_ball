@@ -161,7 +161,6 @@
     <ClCompile Include="Sources\Ball.cpp" />
     <ClCompile Include="Sources\Button.cpp" />
     <ClCompile Include="Sources\Enemy_block.cpp" />
-    <ClCompile Include="Sources\menu.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\Projekt.cpp" />
   </ItemGroup>

@@ -85,7 +85,7 @@ std::vector <sf::Font> get_fonts()
     sf::Font font;
     std::vector <sf::Font> fonts;
 
-    font.loadFromFile("Kenney_Blocks.ttf");
+    font.loadFromFile("Topaz8-xxO8.ttf");
     fonts.emplace_back(font);
 
     return fonts;
@@ -113,9 +113,6 @@ std::map<std::string, sf::SoundBuffer> get_samples()
 
     sample.loadFromFile("Samples/pad_bounce.ogg");
     samples["pad_bounce"] = sample;
-
-    /*sample.loadFromFile("Samples/");
-    samples[""] = sample;*/
 
     return samples;
 }

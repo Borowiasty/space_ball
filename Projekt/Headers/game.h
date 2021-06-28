@@ -3,9 +3,47 @@
 std::tuple<std::vector <Enemy_block>, Player, Ball> level_1(const int difficulty, const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples, sf::Window& window)
 {
     Player player(textures, window.getSize().x / 2 - 96, window.getSize().y - 50);
-    Ball ball(textures, window);
+    Ball ball(textures, samples, window, difficulty);
     std::vector <Enemy_block> enemy_blocks;
-    enemy_blocks.emplace_back(10, fonts, textures, samples, 0, 0);
+    enemy_blocks.emplace_back(12, fonts, textures, samples, 0, 0);
+    double sizer = enemy_blocks[0].getGlobalBounds().width;
+
+    int amounmt_of = 8;
+
+    enemy_blocks[0].setPosition((window.getSize().x - (amounmt_of * sizer)) / 2, 0);
+
+    for (int i = 1; i <= 4; i++)
+    {
+        if (i != 1) { enemy_blocks.emplace_back(0, fonts, textures, samples, enemy_blocks[0].getGlobalBounds().left, (enemy_blocks[0].getGlobalBounds().top + enemy_blocks[0].getGlobalBounds().height) * (i - 1)); }
+        else { enemy_blocks.emplace_back(10, fonts, textures, samples, enemy_blocks[0].getGlobalBounds().left, (enemy_blocks[0].getGlobalBounds().top + enemy_blocks[0].getGlobalBounds().height) * (i - 1)); }
+            
+
+        for (int j = 1; j < amounmt_of; j++)
+        {
+            if (i == 1 && j == 3) { enemy_blocks.emplace_back(1, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 1 && j == 4) { enemy_blocks.emplace_back(1, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 1 && j == 7) { enemy_blocks.emplace_back(12, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 2 && j == 1) { enemy_blocks.emplace_back(4, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 2 && j == 2) { enemy_blocks.emplace_back(5, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 2 && j == 3) { enemy_blocks.emplace_back(6, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 2 && j == 4) { enemy_blocks.emplace_back(7, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 2 && j == 5) { enemy_blocks.emplace_back(8, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 2 && j == 6) { enemy_blocks.emplace_back(9, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 3 && j == 3) { enemy_blocks.emplace_back(10, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 3 && j == 4) { enemy_blocks.emplace_back(12, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else { enemy_blocks.emplace_back(0, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+        }
+    }
+
+    return std::tuple<std::vector <Enemy_block>, Player, Ball>(enemy_blocks, player, ball);
+}
+
+std::tuple<std::vector <Enemy_block>, Player, Ball> level_2(const int difficulty, const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples, sf::Window& window)
+{
+    Player player(textures, window.getSize().x / 2 - 96, window.getSize().y - 50);
+    Ball ball(textures, samples, window, difficulty);
+    std::vector <Enemy_block> enemy_blocks;
+    enemy_blocks.emplace_back(2, fonts, textures, samples, 0, 0);
     double sizer = enemy_blocks[0].getGlobalBounds().width;
 
     int amounmt_of = 8;
@@ -15,52 +53,90 @@ std::tuple<std::vector <Enemy_block>, Player, Ball> level_1(const int difficulty
     for (int i = 1; i <= 4; i++)
     {
         if (i != 1)
-            enemy_blocks.emplace_back(8, fonts, textures, samples, enemy_blocks[0].getGlobalBounds().left, (enemy_blocks[0].getGlobalBounds().top + enemy_blocks[0].getGlobalBounds().height) * (i - 1));
+        {
+            if (i != 4)
+            {
+                enemy_blocks.emplace_back(10, fonts, textures, samples, enemy_blocks[0].getGlobalBounds().left, (enemy_blocks[0].getGlobalBounds().top + enemy_blocks[0].getGlobalBounds().height) * (i - 1));
+            }
+            else
+            {
+                enemy_blocks.emplace_back(0, fonts, textures, samples, enemy_blocks[0].getGlobalBounds().left, (enemy_blocks[0].getGlobalBounds().top + enemy_blocks[0].getGlobalBounds().height) * (i - 1));
+            }
+        }
+
 
         for (int j = 1; j < amounmt_of; j++)
         {
-            enemy_blocks.emplace_back(8, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top);
+            if (i == 1 && j == 3) { enemy_blocks.emplace_back(12, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 1 && j == 4) { enemy_blocks.emplace_back(12, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 1 && j == 7) { enemy_blocks.emplace_back(2, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 2 && j == 7) { enemy_blocks.emplace_back(4, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 3 && j == 2) { enemy_blocks.emplace_back(3, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 3 && j == 5) { enemy_blocks.emplace_back(3, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 3 && j == 7) { enemy_blocks.emplace_back(7, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 1 && j == 7) { enemy_blocks.emplace_back(10, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 4 && j < amounmt_of - 1) { enemy_blocks.emplace_back(1, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else
+            {
+                enemy_blocks.emplace_back(0, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top);
+            }
         }
     }
 
     return std::tuple<std::vector <Enemy_block>, Player, Ball>(enemy_blocks, player, ball);
 }
 
-//std::tuple<std::vector <Enemy_block>, Player, Ball> level_2(const int difficulty, const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, sf::Window& window)
-//{
-//    Player player(textures, window.getSize().x / 2 - 96, window.getSize().y - 50);
-//    Ball ball(textures, window);
-//    std::vector <Enemy_block> enemy_blocks;
-//    enemy_blocks.emplace_back(0, fonts, textures, 100, 100);
-//}
-//
-//std::tuple<std::vector <Enemy_block>, Player, Ball> level_3(const int difficulty, const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, sf::Window& window)
-//{
-//    Player player(textures, window.getSize().x / 2 - 96, window.getSize().y - 50);
-//    Ball ball(textures, window);
-//    std::vector <Enemy_block> enemy_blocks;
-//    enemy_blocks.emplace_back(0, fonts, textures, 100, 100);
-//}
-//
-//std::tuple<std::vector <Enemy_block>, Player, Ball> level_4(const int difficulty, const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, sf::Window& window)
-//{
-//    Player player(textures, window.getSize().x / 2 - 96, window.getSize().y - 50);
-//    Ball ball(textures, window);
-//    std::vector <Enemy_block> enemy_blocks;
-//    enemy_blocks.emplace_back(0, fonts, textures, 100, 100);
-//}
-//
-//std::tuple<std::vector <Enemy_block>, Player, Ball> level_5(const int difficulty, const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, sf::Window& window)
-//{
-//    Player player(textures, window.getSize().x / 2 - 96, window.getSize().y - 50);
-//    Ball ball(textures, window);
-//    std::vector <Enemy_block> enemy_blocks;
-//    enemy_blocks.emplace_back(0, fonts, textures, 100, 100);
-//}
+std::tuple<std::vector <Enemy_block>, Player, Ball> level_3(const int difficulty, const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples, sf::Window& window)
+{
+    Player player(textures, window.getSize().x / 2 - 96, window.getSize().y - 50);
+    Ball ball(textures, samples, window, difficulty);
+    std::vector <Enemy_block> enemy_blocks;
+    enemy_blocks.emplace_back(0, fonts, textures, samples, 0, 0);
+    double sizer = enemy_blocks[0].getGlobalBounds().width;
+
+    int amounmt_of = 8;
+
+    enemy_blocks[0].setPosition((window.getSize().x - (amounmt_of * sizer)) / 2, 0);
+
+    /*for (int i = 1; i <= 4; i++)
+    {
+        if (i != 1)
+        {
+            if (i != 4)
+            {
+                enemy_blocks.emplace_back(10, fonts, textures, samples, enemy_blocks[0].getGlobalBounds().left, (enemy_blocks[0].getGlobalBounds().top + enemy_blocks[0].getGlobalBounds().height) * (i - 1));
+            }
+            else
+            {
+                enemy_blocks.emplace_back(0, fonts, textures, samples, enemy_blocks[0].getGlobalBounds().left, (enemy_blocks[0].getGlobalBounds().top + enemy_blocks[0].getGlobalBounds().height) * (i - 1));
+            }
+        }
+
+
+        for (int j = 1; j < amounmt_of; j++)
+        {
+            if (i == 1 && j == 3) { enemy_blocks.emplace_back(12, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 1 && j == 4) { enemy_blocks.emplace_back(12, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 1 && j == 7) { enemy_blocks.emplace_back(2, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 2 && j == 7) { enemy_blocks.emplace_back(4, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 3 && j == 2) { enemy_blocks.emplace_back(3, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 3 && j == 5) { enemy_blocks.emplace_back(3, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 3 && j == 7) { enemy_blocks.emplace_back(7, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 1 && j == 7) { enemy_blocks.emplace_back(10, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else if (i == 4 && j < amounmt_of - 1) { enemy_blocks.emplace_back(1, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top); }
+            else
+            {
+                enemy_blocks.emplace_back(1, fonts, textures, samples, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().left + enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().width, enemy_blocks[enemy_blocks.size() - 1].getGlobalBounds().top);
+            }
+        }
+    }*/
+
+    return std::tuple<std::vector <Enemy_block>, Player, Ball>(enemy_blocks, player, ball);
+}
 
 int in_game_menu_pause(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples, int points)     //0 - normal, 1 - replay, 2 - exit_to_menu, 3 - exit_to_dekstop
 {
-    sf::RenderWindow pause_window(sf::VideoMode(360, 600), "Pause");
+    sf::RenderWindow pause_window(sf::VideoMode(360, 600), "Space Ball");
     sf::Sprite background(textures.at("background"));
     background.setTextureRect(sf::IntRect(0, 0, pause_window.getSize().x, pause_window.getSize().y));
 
@@ -75,7 +151,6 @@ int in_game_menu_pause(const std::vector <sf::Font>& fonts, const std::map<std::
     visual_points.setPosition(sf::Vector2f(pause_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50));
 
     sf::Clock clock;
-    //gaming
     while (pause_window.isOpen())
     {
         sf::Time elapsed = clock.restart();
@@ -114,27 +189,150 @@ int in_game_menu_pause(const std::vector <sf::Font>& fonts, const std::map<std::
     }
 }
 
-//int in_game_menu_win(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures)
-//{
-//
-//}
-//
-//int in_game_menu_loose(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures)
-//{
-//
-//}
+int in_game_menu_win(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples, int &points, int &level)
+{
+    sf::RenderWindow pause_window(sf::VideoMode(360, 600), "Space Ball");
+    sf::Sprite background(textures.at("background"));
+    sf::Text header;
+    header.setCharacterSize(40);
+    header.setFont(fonts[0]);
+    header.setString("You Win");
+    header.setOrigin(header.getGlobalBounds().width / 2, header.getGlobalBounds().height / 2);
+    header.setPosition(pause_window.getSize().x / 2, header.getGlobalBounds().height / 2 + 20);
+    background.setTextureRect(sf::IntRect(0, 0, pause_window.getSize().x, pause_window.getSize().y));
 
-int game(const int difficulty, const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, std::map < std::string, sf::Texture> &drops, const std::map <std::string, sf::SoundBuffer>& samples, const int level, int points)                  //0-stop, 1-play_again, 2-open_menu
+    std::vector<Button> options;
+    if (level != 3) { options.emplace_back(fonts, textures, samples, "Next level", 20, 300, 80, pause_window.getSize().x / 2, 150); }
+    else { options.emplace_back(fonts, textures, samples, "Save", 20, 300, 80, pause_window.getSize().x / 2, 150); }
+    options.emplace_back(fonts, textures, samples, "Replay", 20, 300, 80, pause_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+    options.emplace_back(fonts, textures, samples, "Exit to menu", 20, 300, 80, pause_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+    options.emplace_back(fonts, textures, samples, "Exit to desktop", 20, 300, 80, pause_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+
+    sf::Text visual_points(std::to_string(points), fonts[0], 50);
+    visual_points.setOrigin(visual_points.getGlobalBounds().width / 2, visual_points.getGlobalBounds().height / 2);
+    visual_points.setPosition(sf::Vector2f(pause_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50));
+
+    sf::Clock clock;
+    while (pause_window.isOpen())
+    {
+        sf::Time elapsed = clock.restart();
+        //check event
+        sf::Event event;
+        while (pause_window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                pause_window.close();
+                return 0;
+            }
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (options[0].step(sf::Mouse::getPosition(pause_window))) 
+                {
+                    if (level != 3) { pause_window.close(); }
+                    else { save_my_points(fonts, textures, samples, points); pause_window.close(); }
+                    return 0; 
+                }
+                else if (options[1].step(sf::Mouse::getPosition(pause_window))) { pause_window.close(); return 1; }
+                else if (options[2].step(sf::Mouse::getPosition(pause_window))) { pause_window.close(); return 2; }
+                else if (options[3].step(sf::Mouse::getPosition(pause_window))) { pause_window.close(); return 3; }
+            }
+        }
+
+        //window clear
+        pause_window.clear();
+
+        //drawing and display place
+        pause_window.draw(background);
+        pause_window.draw(header);
+        pause_window.draw(visual_points);
+        for (auto& option : options)
+        {
+            pause_window.draw(option);
+            pause_window.draw(option.contain_text());
+        }
+
+
+        pause_window.display();
+    }
+}
+
+int in_game_menu_loose(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples, int &points, int &level)
+{
+    sf::RenderWindow pause_window(sf::VideoMode(360, 600), "Space Ball");
+    sf::Sprite background(textures.at("background"));
+    sf::Text header;
+    header.setCharacterSize(40);
+    header.setFont(fonts[0]);
+    header.setString("You Loose");
+    header.setOrigin(header.getGlobalBounds().width / 2, header.getGlobalBounds().height / 2);
+    header.setPosition(pause_window.getSize().x / 2, header.getGlobalBounds().height / 2 + 20);
+    background.setTextureRect(sf::IntRect(0, 0, pause_window.getSize().x, pause_window.getSize().y));
+    
+    level = 1;
+
+    std::vector<Button> options;
+    options.emplace_back(fonts, textures, samples, "Replay", 20, 300, 80, pause_window.getSize().x / 2, 150);
+    options.emplace_back(fonts, textures, samples, "Exit to menu", 20, 300, 80, pause_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+    options.emplace_back(fonts, textures, samples, "Exit to desktop", 20, 300, 80, pause_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
+
+    sf::Text visual_points(std::to_string(points), fonts[0], 50);
+    visual_points.setOrigin(visual_points.getGlobalBounds().width / 2, visual_points.getGlobalBounds().height / 2);
+    visual_points.setPosition(sf::Vector2f(pause_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50));
+    points = 0;
+
+    sf::Clock clock;
+    while (pause_window.isOpen())
+    {
+        sf::Time elapsed = clock.restart();
+        //check event
+        sf::Event event;
+        while (pause_window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                pause_window.close();
+                return 0;
+            }
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (options[0].step(sf::Mouse::getPosition(pause_window))) { pause_window.close(); return 1; }
+                else if (options[1].step(sf::Mouse::getPosition(pause_window))) { pause_window.close(); return 2; }
+                else if (options[2].step(sf::Mouse::getPosition(pause_window))) { pause_window.close(); return 3; }
+            }
+        }
+
+        //window clear
+        pause_window.clear();
+
+        //drawing and display place
+        pause_window.draw(background);
+        pause_window.draw(header);
+        pause_window.draw(visual_points);
+        for (auto& option : options)
+        {
+            pause_window.draw(option);
+            pause_window.draw(option.contain_text());
+        }
+
+
+        pause_window.display();
+    }
+}
+
+int game(const int difficulty, const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, std::map < std::string, sf::Texture> &drops, const std::map <std::string, sf::SoundBuffer>& samples, int &level, int &points)                  //0-stop, 1-play_again, 2-open_menu, 3-next_level
 {
     sf::RenderWindow game_window(sf::VideoMode(1000, 700), "Space Ball");
     sf::Sprite background(textures.at("background"));
     background.setTextureRect(sf::IntRect(0, 0, game_window.getSize().x, game_window.getSize().y));
+    
     //render game
     std::vector <Enemy_block> enemy_blocks;
     Player player;
     Ball ball;
     bool game_working = false;
     bool win = false;
+
 
     sf::Text speed_timer;
     sf::Text resizer_timer;
@@ -157,13 +355,13 @@ int game(const int difficulty, const std::vector <sf::Font>& fonts, const std::m
     switch (level)
     {
     case 1:
-    {
         std::tie(enemy_blocks, player, ball) = level_1(difficulty, fonts, textures, samples, game_window);
         break;
-    }
     case 2:
+        std::tie(enemy_blocks, player, ball) = level_2(difficulty, fonts, textures, samples, game_window);
         break;
     case 3:
+        std::tie(enemy_blocks, player, ball) = level_3(difficulty, fonts, textures, samples, game_window);
         break;
     case 4:
         break;
@@ -176,6 +374,14 @@ int game(const int difficulty, const std::vector <sf::Font>& fonts, const std::m
     //gaming
     while (game_window.isOpen())
     {
+        bool all_blocks_destroyed = true;
+        for (auto& block : enemy_blocks)
+        {
+            if (block.am_i_alive()) { all_blocks_destroyed = false; }
+        }
+
+        if (all_blocks_destroyed) { win = true; break; }
+
         sf::Time elapsed = clock.restart();
         //check event
         sf::Event event;
@@ -327,6 +533,49 @@ int game(const int difficulty, const std::vector <sf::Font>& fonts, const std::m
 
         game_window.display();
     }
-    if (win) {}
-    //else { in_game_menu_loose(fonts, textures); }
+
+    if (win) 
+    {
+        switch (in_game_menu_win(fonts, textures, samples, points, level))
+        {
+        case 0:
+            game_window.close();
+            return 3;
+            break;
+        case 1:
+            game_window.close();
+            return 1;
+            break;
+        case 2:
+            game_window.close();
+            return 2;
+            break;
+        case 3:
+            game_window.close();
+            return 0;
+            break;
+        }
+    }
+    else
+    {
+        switch (in_game_menu_loose(fonts, textures, samples, points, level))
+        {
+        case 0:
+            game_window.close();
+            return 3;
+            break;
+        case 1:
+            game_window.close();
+            return 1;
+            break;
+        case 2:
+            game_window.close();
+            return 2;
+            break;
+        case 3:
+            game_window.close();
+            return 0;
+            break;
+        }
+    }
 }

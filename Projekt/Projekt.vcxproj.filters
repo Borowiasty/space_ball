@@ -29,9 +29,6 @@
     <ClCompile Include="Sources\Enemy_block.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\menu.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\Player.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
