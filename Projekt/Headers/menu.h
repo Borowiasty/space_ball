@@ -7,6 +7,8 @@ void points_table(const std::vector <sf::Font>& fonts, const std::map<std::strin
 void save_my_points(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer>& samples, int& points);
 void to_file_saver(std::string user_name, int points);
 
+int difficulty = 2;
+
 int menu(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Texture>& textures, const std::map <std::string, sf::SoundBuffer> &samples)                                      //0-exit, 1-easy, 2-medium, 3-hard, 4-controls, 5-points, 
 {
     sf::RenderWindow menu_window(sf::VideoMode(360, 600), "Space Ball");
@@ -23,8 +25,6 @@ int menu(const std::vector <sf::Font>& fonts, const std::map<std::string, sf::Te
     options.emplace_back(fonts, textures, samples, "Difficulty", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
     options.emplace_back(fonts, textures, samples, "Scores", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
     options.emplace_back(fonts, textures, samples, "Exit", 20, 300, 80, menu_window.getSize().x / 2, options[options.size() - 1].getGlobalBounds().top + options[options.size() - 1].getGlobalBounds().height + 50);
-
-    int difficulty = 2;
 
     //save_my_points(fonts, textures, samples, x);
 

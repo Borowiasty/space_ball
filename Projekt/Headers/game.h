@@ -15,7 +15,6 @@ std::tuple<std::vector <Enemy_block>, Player, Ball> level_1(const int difficulty
     for (int i = 1; i <= 4; i++)
     {
         if (i != 1) { enemy_blocks.emplace_back(0, fonts, textures, samples, enemy_blocks[0].getGlobalBounds().left, (enemy_blocks[0].getGlobalBounds().top + enemy_blocks[0].getGlobalBounds().height) * (i - 1)); }
-        else { enemy_blocks.emplace_back(10, fonts, textures, samples, enemy_blocks[0].getGlobalBounds().left, (enemy_blocks[0].getGlobalBounds().top + enemy_blocks[0].getGlobalBounds().height) * (i - 1)); }
             
 
         for (int j = 1; j < amounmt_of; j++)
@@ -346,11 +345,11 @@ int game(const int difficulty, const std::vector <sf::Font>& fonts, const std::m
     no_loose_timer.setFont(fonts[0]);
     ball_speed_timer.setFont(fonts[0]);
 
-    speed_timer.setCharacterSize(50);
-    resizer_timer.setCharacterSize(50);
-    stop_timer.setCharacterSize(50);
-    no_loose_timer.setCharacterSize(50);
-    ball_speed_timer.setCharacterSize(50);
+    speed_timer.setCharacterSize(40);
+    resizer_timer.setCharacterSize(40);
+    stop_timer.setCharacterSize(40);
+    no_loose_timer.setCharacterSize(40);
+    ball_speed_timer.setCharacterSize(40);
 
     switch (level)
     {
@@ -503,7 +502,7 @@ int game(const int difficulty, const std::vector <sf::Font>& fonts, const std::m
         if (player.get_size_is_changed())
         {
             resizer_timer.setString("Resized: "+std::to_string(player.get_changing_size_time()).substr(0, 3));
-            resizer_timer.setPosition(game_window.getSize().x - resizer_timer.getGlobalBounds().width - 10, speed_timer.getGlobalBounds().top + speed_timer.getGlobalBounds().height + 10);
+            resizer_timer.setPosition(game_window.getSize().x - resizer_timer.getGlobalBounds().width - 10, speed_timer.getGlobalBounds().top + speed_timer.getGlobalBounds().height + 30);
             game_window.draw(resizer_timer);
         }
         else { resizer_timer.setPosition(speed_timer.getGlobalBounds().left, speed_timer.getGlobalBounds().top); }
@@ -511,7 +510,7 @@ int game(const int difficulty, const std::vector <sf::Font>& fonts, const std::m
         if (player.get_stop_is_changed())
         {
             stop_timer.setString("Stoped: "+std::to_string(player.get_stop_time()).substr(0, 3));
-            stop_timer.setPosition(game_window.getSize().x - stop_timer.getGlobalBounds().width - 10, resizer_timer.getGlobalBounds().top + resizer_timer.getGlobalBounds().height + 10);
+            stop_timer.setPosition(game_window.getSize().x - stop_timer.getGlobalBounds().width - 10, resizer_timer.getGlobalBounds().top + resizer_timer.getGlobalBounds().height + 30);
             game_window.draw(stop_timer);
         }
         else { stop_timer.setPosition(resizer_timer.getGlobalBounds().left, resizer_timer.getGlobalBounds().top); }
@@ -519,7 +518,7 @@ int game(const int difficulty, const std::vector <sf::Font>& fonts, const std::m
         if (ball.get_loose_is_changed())
         {
             no_loose_timer.setString("No loose: " + std::to_string(ball.get_timer_no_loose()).substr(0, 3));
-            no_loose_timer.setPosition(game_window.getSize().x - no_loose_timer.getGlobalBounds().width - 10, stop_timer.getGlobalBounds().top + stop_timer.getGlobalBounds().height + 10);
+            no_loose_timer.setPosition(game_window.getSize().x - no_loose_timer.getGlobalBounds().width - 10, stop_timer.getGlobalBounds().top + stop_timer.getGlobalBounds().height + 30);
             game_window.draw(no_loose_timer);
         }
         else { no_loose_timer.setPosition(stop_timer.getGlobalBounds().left, stop_timer.getGlobalBounds().top); }
@@ -527,7 +526,7 @@ int game(const int difficulty, const std::vector <sf::Font>& fonts, const std::m
         if (ball.changed_speed() != 0)
         {
             ball_speed_timer.setString("Ball speed changed: " + std::to_string(ball.get_timer_changed_speed()).substr(0, 3));
-            ball_speed_timer.setPosition(game_window.getSize().x - ball_speed_timer.getGlobalBounds().width - 10, no_loose_timer.getGlobalBounds().top + no_loose_timer.getGlobalBounds().height + 10);
+            ball_speed_timer.setPosition(game_window.getSize().x - ball_speed_timer.getGlobalBounds().width - 10, no_loose_timer.getGlobalBounds().top + no_loose_timer.getGlobalBounds().height + 30);
             game_window.draw(ball_speed_timer);
         }
 
